@@ -2,6 +2,7 @@ from os import system, name
 from time import sleep 
 import datetime
 import random
+
 opers = name
 #This is for debugging:
 debug = 0
@@ -15,7 +16,7 @@ def clear():
 clear()
 # Input file
 chainex = """
-
+\033[31m
   e88'Y88 888 888     e Y8b     888 Y88b Y88 888'Y88 Y8b Y8P 
  d888  'Y 888 888    d8b Y8b    888  Y88b Y8 888 ,'Y  Y8b Y  
 C8888     8888888   d888b Y8b   888 b Y88b Y 888C8     Y8b   
@@ -26,15 +27,15 @@ C8888     8888888   d888b Y8b   888 b Y88b Y 888C8     Y8b
 while True:
     clear()
     print(chainex)
-    print("1) ChainEx Text Encrypt")
+    print("\033[33m1) ChainEx Text Encrypt")
     print("2) ChainEx Text Decrypt")
     print("3) Quit")
-    act = input("\nWhat do you want to do?")
+    act = input("\n\033[93mWhat do you want to do?")
     if (act==str(1)):
         clear()
         print(chainex)
-        print(" ChainEx Text Encrypt")
-        en = input("\nPlease enter below text to encode:")
+        print("\033[33m ChainEx Text Encrypt")
+        en = input("\n\033[93mPlease enter below text to encode:")
         try: 
             en = str(en)
         except: 
@@ -77,19 +78,19 @@ while True:
             print("Rand string", key)
             print("Rand number", randtooperate)
             print("Date" , date)
-        print("Your message has been succesfully crypted:", "["+key+"]",crypt)
-        print("\n\nRemember today's date!")
+        print("\033[33mYour message has been succesfully crypted:\033[36m", "["+key+"]",crypt)
+        print("\n\n\033[33mRemember today's date!")
         system("pause")
 
     if(act==str(2)):
         clear()
         print(chainex)
-        print(" ChainEx Text Decrypt")
-        en = input("\nPlease enter below text to decode:")
+        print("\033[33m ChainEx Text Decrypt")
+        en = input("\n\033[93mPlease enter below text to decode:")
         try: 
             en = str(en)
         except: 
-            print("Value not valid. Is not a string")
+            print("\033[33mValue not valid. Is not a string")
             quit()
         # Var settings
         crypt = ""
@@ -100,7 +101,7 @@ while True:
             rand = prerand[0].strip("[").strip("]")
             #print("Rand found", rand)
         except: 
-            print("Code not valid.. [Key not found]")
+            print("\033[33mCode not valid.. [Key not found]")
             quit()
         # decryption of key (RAND)
         # Example : [RLGX] 82769313;82769342/82769349;82769349;82769352/
@@ -125,11 +126,11 @@ while True:
                     # add to final output
                     final += str(chr(int(x)))
         except:
-            print("Code not valid.. Something failed while decrypting")
+            print("\033[33mCode not valid.. Something failed while decrypting")
             quit()
-        print("--------------------")
-        print("Result:", final)
-        print("--------------------")
+        print("\033[33m--------------------")
+        print("Result:\033[36m", final)
+        print("\033[33m--------------------")
         system("pause")
     if(act=="3"):
         quit()
