@@ -2,42 +2,15 @@ from os import system, name
 from time import sleep 
 import datetime
 import random
-
-opers = name
-#This is for debugging:
+import eel
 debug = 0
-def clear(): 
-        # for windows 
-    if opers == 'nt': 
-        _ = system('cls') 
-        # for mac and linux(here, os.name is 'posix') 
-    else: 
-        _ = system('clear') 
-clear()
-# Input file
-chainex = """
-\033[31m
-  e88'Y88 888 888     e Y8b     888 Y88b Y88 888'Y88 Y8b Y8P 
- d888  'Y 888 888    d8b Y8b    888  Y88b Y8 888 ,'Y  Y8b Y  
-C8888     8888888   d888b Y8b   888 b Y88b Y 888C8     Y8b   
- Y888  ,d 888 888  d888888888b  888 8b Y88b  888 ",d  e Y8b  
-  "88,d88 888 888 d8888888b Y8b 888 88b Y88b 888,d88 d8b Y8b 
-                                                             
-"""
-while True:
-    clear()
-    print(chainex)
-    print("\033[33m1) ChainEx Text Encrypt")
-    print("2) ChainEx Text Decrypt")
-    print("3) Quit")
-    act = input("\n\033[93mWhat do you want to do?")
-    if (act==str(1)):
-        clear()
-        print(chainex)
-        print("\033[33m ChainEx Text Encrypt")
-        en = input("\n\033[93mPlease enter below text to encode:")
+eel.init('web')
+
+
+def encrypt(en, mode):
+    if (int(mode) == 1):
         try: 
-            en = str(en)
+       	    en = str(en)
         except: 
             print("Value not valid.")
             quit()
@@ -46,7 +19,6 @@ while True:
         date = datetime.datetime.now().day+datetime.datetime.now().month+datetime.datetime.now().year
         #genmerate a key  
         key = ''
- 
         for _ in range(4):
             #only alphabetical chars A-z
             rint = random.randint(97, 97 + 26 - 1)
@@ -59,7 +31,6 @@ while True:
         randtooperate = ""
         for l in key:
             randtooperate += str(ord(l))
-
         # Start encrypting string
         for i in en:
             num = ord(i)
@@ -73,20 +44,8 @@ while True:
             pre = num+date+int(randtooperate)
             crypt += str(pre)+str(char)
         #final print
-        if (debug == 1):
-            print("Credentials:")
-            print("Rand string", key)
-            print("Rand number", randtooperate)
-            print("Date" , date)
-        print("\033[33mYour message has been succesfully crypted:\033[36m", "["+key+"]",crypt)
-        print("\n\n\033[33mRemember today's date!")
-        system("pause")
-
-    if(act==str(2)):
-        clear()
-        print(chainex)
-        print("\033[33m ChainEx Text Decrypt")
-        en = input("\n\033[93mPlease enter below text to decode:")
+        return("["+key+"] "+ crypt)
+    if (int(mode) == 2):
         try: 
             en = str(en)
         except: 
@@ -128,9 +87,8 @@ while True:
         except:
             print("\033[33mCode not valid.. Something failed while decrypting")
             quit()
-        print("\033[33m--------------------")
-        print("Result:\033[36m", final)
-        print("\033[33m--------------------")
-        system("pause")
-    if(act=="3"):
-        quit()
+        return final
+@eel.expose
+def pyencrypt(en, mode):
+	return(encrypt(en, mode))
+eel.start('index.html')
