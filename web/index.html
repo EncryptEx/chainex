@@ -22,7 +22,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h1>Encrypt</h1><input type="text" id="encryptt" style="margin: 15px;padding: 10px;width: 75%;border-radius: 5px;"><button class="btn btn-primary" type="button" onclick="encrypt()">Encrypt</button>
+                    <h1>Encrypt</h1>
+                    <input type="text" id="encryptt" style="margin: 15px;padding: 10px;width: 75%;border-radius: 5px;"><br>
+                    <p style="margin-bottom: 4px;">Time to expire:</p><select name="time" id="time" style="margin: 0px 10px 10px 10px; padding: 10px;">
+                        <option value="0">1 Minute</option>
+                        <option value="1">1 Hour</option>
+                        <option value="2">1 Day</option>
+                        <option value="3">1 Month</option>
+                        <option value="4">1 Year</option>
+                    </select><button class="btn btn-primary" type="button" onclick="encrypt()">Encrypt</button>
                     <h1 style="font-size: 30px;">Output</h1>
                     <textarea id="encryptout" style="border-radius: 5px;width: 100%; margin: 10px; padding: 1
                     0px"></textarea>
@@ -40,12 +48,13 @@
     <script type="text/javascript">
         async function encrypt() {
             var en = document.getElementById('encryptt').value;
-            var retu = await eel.pyencrypt(en, 1)();
+            var ti = document.getElementById('time').value;
+            var retu = await eel.pyencrypt(en, 1, ti)();
             document.getElementById('encryptout').innerHTML = retu;
         }
         async function decrypt() {
             var en = document.getElementById('decryptt').value;
-            var retu = await eel.pyencrypt(en, 2)();
+            var retu = await eel.pyencrypt(en, 2, "")();
             document.getElementById('decryptout').innerHTML = retu;
         }
     </script>
