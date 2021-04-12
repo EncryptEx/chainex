@@ -9,6 +9,7 @@
 </p>
 
 # Install
+<a href="https://github.com/EncryptEx/chainex/releases/download/v2.3LTS/chainex.exe">[v2.3LTS] Portable Executable (.exe)</a>
 <a href="https://github.com/EncryptEx/chainex/releases/download/2.0/chainex.exe">[2.0] Portable Executable (.exe)</a>
 # ⭐ Stargazers <br>
 [![@EncryptEx/landing](https://reporoster.com/stars/EncryptEx/landing)](https://github.com/EncryptEx/landing/stargazers)
