@@ -29,3 +29,6 @@ jobs:
 
       - name: Run Python Script
         uses: jannekem/run-python-script-action@v1.2
+        with:
+          script: |
+            import test_chainex.py
