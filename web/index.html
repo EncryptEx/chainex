@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/styles.min.css">
     <script type="text/javascript" src="/eel.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -23,22 +24,29 @@
             <div class="row">
                 <div class="col-md-6">
                     <h1>Encrypt</h1>
-                    <input type="text" id="encryptt" style="margin: 15px;padding: 10px;width: 75%;border-radius: 5px;"><br>
-                    <p style="margin-bottom: 4px;">Time to expire:</p><select name="time" id="time" style="margin: 0px 10px 10px 10px; padding: 10px;">
+                    <input type="text" id="encryptt" style="margin: 15px;padding: 10px;width: 90%;border-radius: 5px;" placeholder="Your text goes here..."><br>
+                    <p style="margin-bottom: 4px; font-size: 20px;" >Autodestruct message in:</p><select name="time" id="time" style="margin: 0px 10px 10px 10px; padding: 10px;">
                         <option value="0">1 Minute</option>
                         <option value="1">1 Hour</option>
                         <option value="2">1 Day</option>
                         <option value="3">1 Month</option>
                         <option value="4">1 Year</option>
-                    </select><button class="btn btn-primary" type="button" onclick="encrypt()">Encrypt</button>
-                    <h1 style="font-size: 30px;">Output</h1>
-                    <textarea id="encryptout" style="border-radius: 5px;width: 100%; margin: 10px; padding: 1
-                    0px"></textarea>
+                    </select>
+                    <br><p style="display: inline; font-size: 20px;">Include Key with final string?</p>
+                    <input style="width: 20px; height: 20px;" type="checkbox" name="exportkey" id="exportkey" checked><br>
+                    <button style="margin-top: 10px;" class="btn btn-primary" type="button" onclick="encrypt()">Encrypt</button>
+                    <br><br><h1 style="font-size: 30px;">Output</h1>
+                    <textarea placeholder="Output Key goes here..." type="text" class="encryptinput" id="exportkeytext" style="display: none;margin: 10px;padding: 10px;width: 100%;border-radius: 5px;"></textarea>
+                    <textarea placeholder="Output goes here..." id="encryptout" class="encryptinput" style="border-radius: 5px;width: 100%; margin: 10px; padding: 10px"></textarea>
                 </div>
                 <div class="col-md-6">
-                    <h1>Decrypt</h1><input type="text" id="decryptt" style="margin: 15px;padding: 10px;width: 75%;border-radius: 5px;"><button class="btn btn-primary" type="button" onclick="decrypt()">Decrypt</button>
+                    <h1>Decrypt</h1><input placeholder="Your text goes here..." type="text" id="decryptt" style="margin: 15px;padding: 10px;width: 90%;border-radius: 5px;">
+                    <br><p style="display: inline; font-size: 20px;">Is the key included with the string? (default = yes)</p>
+                    <input style="width: 20px; height: 20px;" type="checkbox" name="importkey" id="importkey" checked><br>
+                    <input placeholder="Insert Your Key here..." type="text" id="importkeytext" style="display: none;margin: 15px;padding: 10px;width: 90%;border-radius: 5px;">
+                    <button  style="margin: 20px 0px 20px 0px;" class="btn btn-primary" type="button" onclick="decrypt()">Decrypt</button>
                     <h1 style="font-size: 30px;">Output</h1>
-                    <textarea id="decryptout" style="border-radius: 5px;width: 100%; margin: 10px; padding: 1
+                    <textarea placeholder="Output goes here..." id="decryptout" style="border-radius: 5px;width: 100%; margin: 10px; padding: 1
                     0px"></textarea>
                 </div>
             </div>
@@ -46,16 +54,57 @@
     </div>
     <hr>
     <script type="text/javascript">
+        $(document).ready(function() {
+            //set initial state.
+            $('#exportkey').val(this.checked);
+            $('#importkey').val(this.checked);
+
+            // if is not checked the checkbox, display the key box
+            $('#exportkey').change(function() {
+                if(this.checked) {
+                    x = document.getElementById('exportkeytext');
+                    x.style.display = 'none';
+                    exp = "";
+                } else {
+                    x = document.getElementById('exportkeytext');
+                    x.style.display = 'block';
+                    window.exp = "Wants to export";
+                }
+                      
+            });
+            // if is not checked the checkbox, display the key box
+            $('#importkey').change(function() {
+                if(this.checked) {
+                    x = document.getElementById('importkeytext');
+                    x.style.display = 'none';
+                    window.exp = "";
+                } else {
+                    x = document.getElementById('importkeytext');
+                    x.style.display = 'block';
+                    window.exp = document.getElementById("importkeytext").value;
+                }
+                      
+            });
+        });
         async function encrypt() {
             var en = document.getElementById('encryptt').value;
             var ti = document.getElementById('time').value;
-            var retu = await eel.pyencrypt(en, 1, ti)();
-            document.getElementById('encryptout').innerHTML = retu;
+            window.exp = document.getElementById("importkeytext").value;
+            var retu = await eel.pyencrypt(en, 1, ti, document.getElementById("importkeytext").value)()
+            if (window.exp != "") {
+                document.getElementById('encryptout').innerHTML = retu[0];
+                document.getElementById('exportkeytext').innerHTML = retu[1];
+                console.log(retu);
+            } else {
+                document.getElementById('encryptout').innerHTML = retu[0];
+                console.log(retu);
+            }
         }
         async function decrypt() {
             var en = document.getElementById('decryptt').value;
-            var retu = await eel.pyencrypt(en, 2, "")();
-            document.getElementById('decryptout').innerHTML = retu;
+            var retu = await eel.pyencrypt(en, 2, "", document.getElementById("importkeytext").value)();
+            document.getElementById('decryptout').innerHTML = retu[0];
+            console.log(retu);
         }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
