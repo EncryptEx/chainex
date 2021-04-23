@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CIa
+name: Run Script test_chainex.py
 
 # Controls when the action will run. 
 on:
