@@ -36,8 +36,8 @@
                     <input style="width: 20px; height: 20px;" type="checkbox" name="exportkey" id="exportkey" checked><br>
                     <button style="margin-top: 10px;" class="btn btn-primary" type="button" onclick="encrypt()">Encrypt</button>
                     <br><br><h1 style="font-size: 30px;">Output</h1>
-                    <textarea placeholder="Output Key goes here..." type="text" class="encryptinput" id="exportkeytext" style="display: none;margin: 10px;padding: 10px;width: 100%;border-radius: 5px;"></textarea>
-                    <textarea placeholder="Output goes here..." id="encryptout" class="encryptinput" style="border-radius: 5px;width: 100%; margin: 10px; padding: 10px"></textarea>
+                    <textarea placeholder="Output Key goes here..." type="text" class="encryptinput" id="exportkeytext" style="display: none;margin: 10px;padding: 10px;width: 100%;border-radius: 5px;" disabled></textarea>
+                    <textarea disabled placeholder="Output goes here..." id="encryptout" class="encryptinput" style="border-radius: 5px;width: 100%; margin: 10px; padding: 10px"></textarea>
                 </div>
                 <div class="col-md-6">
                     <h1>Decrypt</h1><input placeholder="Your text goes here..." type="text" id="decryptt" style="margin: 15px;padding: 10px;width: 90%;border-radius: 5px;">
@@ -46,8 +46,8 @@
                     <input placeholder="Insert Your Key here..." type="text" id="importkeytext" style="display: none;margin: 15px;padding: 10px;width: 90%;border-radius: 5px;">
                     <button  style="margin: 20px 0px 20px 0px;" class="btn btn-primary" type="button" onclick="decrypt()">Decrypt</button>
                     <h1 style="font-size: 30px;">Output</h1>
-                    <textarea placeholder="Output goes here..." id="decryptout" style="border-radius: 5px;width: 100%; margin: 10px; padding: 1
-                    0px"></textarea>
+                    <textarea placeholder="Output goes here..." id="decryptout" class="encryptinput" style="border-radius: 5px;width: 100%; margin: 10px; padding: 1
+                    0px" disabled></textarea>
                 </div>
             </div>
         </div>
@@ -68,7 +68,6 @@
                 } else {
                     x = document.getElementById('exportkeytext');
                     x.style.display = 'block';
-                    window.exp = "Wants to export";
                 }
                       
             });
@@ -77,11 +76,9 @@
                 if(this.checked) {
                     x = document.getElementById('importkeytext');
                     x.style.display = 'none';
-                    window.exp = "";
                 } else {
                     x = document.getElementById('importkeytext');
                     x.style.display = 'block';
-                    window.exp = document.getElementById("importkeytext").value;
                 }
                       
             });
@@ -89,22 +86,25 @@
         async function encrypt() {
             var en = document.getElementById('encryptt').value;
             var ti = document.getElementById('time').value;
-            window.exp = document.getElementById("importkeytext").value;
-            var retu = await eel.pyencrypt(en, 1, ti, document.getElementById("importkeytext").value)()
-            if (window.exp != "") {
+            y = document.getElementById('exportkey');
+           
+           
+            if (y.checked == false) {
+                var retu = await eel.pyencrypt(en, 1, ti, "i want to export a key")()
                 document.getElementById('encryptout').innerHTML = retu[0];
                 document.getElementById('exportkeytext').innerHTML = retu[1];
-                console.log(retu);
+                // console.log(retu);
             } else {
+                var retu = await eel.pyencrypt(en, 1, ti, "")()
                 document.getElementById('encryptout').innerHTML = retu[0];
-                console.log(retu);
+                // console.log(retu);
             }
         }
         async function decrypt() {
             var en = document.getElementById('decryptt').value;
             var retu = await eel.pyencrypt(en, 2, "", document.getElementById("importkeytext").value)();
             document.getElementById('decryptout').innerHTML = retu[0];
-            console.log(retu);
+            // console.log(retu);
         }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

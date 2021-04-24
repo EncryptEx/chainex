@@ -1,4 +1,5 @@
 from os import system, name 
+from sys import exit
 from time import sleep 
 import datetime
 import random
@@ -26,11 +27,13 @@ def getTime(ti):
         date = datetime.datetime.now().year
     else: 
         print("\033[33mError while trying to get time expiration value. #3=", ti)
-        quit()
+        exit()
     return date
 # core functions.
 def encrypt(en, mode, ti, export):
     if (int(mode) == 1):
+        if (debug == 1):
+            print("==========ENCRYPT METHOD STARTING============")
         try: 
             if (en is None):
                 en = " ._. "
@@ -39,13 +42,13 @@ def encrypt(en, mode, ti, export):
             en = str(en)
         except: 
             print("Value not valid. STRING TO ENCRYPT")
-            quit()
+            exit()
         #Variable Setting
         try:
             ti = int(ti)
         except:
             print("Value not valid. TIME VAR")
-            quit()
+            exit()
         # var declaration
         crypt = ""
  
@@ -93,6 +96,7 @@ def encrypt(en, mode, ti, export):
         if (debug == 1):
             print("Export:",export)
         if (export is not None and export != ""):
+            # no want to export
             exportkey = str("("+str(ti)+") ["+key+"] ")
             encodedBytes = base64.b64encode(exportkey.encode("utf-8"))
             encodedkey = str(encodedBytes, "utf-8")
@@ -109,6 +113,7 @@ def encrypt(en, mode, ti, export):
                 print("Full export crypt e1",aencodedBytes)
                 print("Full export crypt e2",finalencodedcrypt)
                 print([finalencodedcrypt, encodedkey])
+                print("--------------------FINISH ENCODE WITH EXPORT--------------------")
             return [finalencodedcrypt, encodedkey]
             
         else:
@@ -118,18 +123,19 @@ def encrypt(en, mode, ti, export):
             if (debug == 1):
                 print("MODE 2")
                 print([encodedStr])
-                print("--------------------FINISH--------------------")
+                print("--------------------FINISH ENCODE WITH NO EXPORT--------------------")
             return [encodedStr]
     if (int(mode) == 2):
         # decryption mode
         if (debug == 1):
+            print("==========DECRYPT METHOD STARTING============")
             print("mode", mode, "export", export, "time", ti, "string", en)
         
         try: 
             en = str(en).lstrip()
         except:
             print("\033[33mDECODE: Is not a string or can't be converted into it.")
-            quit()
+            exit()
 
         try:
             decodedBytes = base64.b64decode(en)
@@ -141,13 +147,16 @@ def encrypt(en, mode, ti, export):
         # Var settings
         crypt = ""
         if (export is not None and export != ""):
+            if (debug == 1):
+                    print("EXPORT IS ON")
+            # KEY IS IMPORTED
             try: 
                 export = str(export)
                 decodedBytes = base64.b64decode(export)
                 export = str(decodedBytes, "utf-8")
             except: 
                 print("\033[33mSomething went wrong when decoding base64 of export")
-                quit()
+                exit()
 
             preti = export.split()
             try: 
@@ -158,11 +167,14 @@ def encrypt(en, mode, ti, export):
                 rand = preti[1].strip("[").strip("]")
             except: 
                 print("\033[33mValue not valid. Is not a string while getting #preti-export-yes")
-                quit()
+                exit()
 
             date = getTime(ti)
-
+            length = 0
         else:
+            # KEY IS NOT IMPORTED SEPARATELY
+            if (debug == 1):
+                    print("EXPORT IS OFF")
             try: 
                 preti = en.split()
                 if (debug == 1):
@@ -171,7 +183,7 @@ def encrypt(en, mode, ti, export):
                 ti = int(ti)
             except: 
                 print("\033[33mError while trying to get time expiration value. #preti-no-export")
-                quit()
+                exit()
 
             # get time depending of ti value
             date = getTime(ti)
@@ -188,7 +200,8 @@ def encrypt(en, mode, ti, export):
                 #print("Rand found", rand)
             except: 
                 print("\033[33mCode not valid.. [Key not found]")
-                quit()
+                exit()
+            length = len(rand)+7
         # decryption of key (RAND)
         # Example : [RLGX] 82769313;82769342/82769349;82769349;82769352/
         frand = ""
@@ -206,8 +219,8 @@ def encrypt(en, mode, ti, export):
         #remove key from string to decode 
         try: 
             if (debug == 1):
-                print("to decode:", en[len(rand)+7:])
-            for i in en[len(rand)+7:].split("/"):
+                print("to decode:", en[length:])
+            for i in en[length:].split("/"):
                 # 1 of 2 splittings done
                 for encodedletter in i.split(";"):
                     # if letter is null skip
@@ -225,5 +238,5 @@ def encrypt(en, mode, ti, export):
 
         except:
             return "An error ocurred while decoding it."
-            quit()
+            exit()
         return[final]

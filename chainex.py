@@ -4,7 +4,7 @@ eel.init('web')
 
 # 
 # to compile:
-# python -m eel chainex.py web --onefile --noconsole --exclude win32com --exclude numpy --exclude cryptography
+# python -m eel chainex.py web --onefile --noconsole --exclude win32com --exclude numpy --exclude cryptography --icon=favicon.ico
 # 
 
 # IMPORTANT: MAIN WORK ON corechainex.py
