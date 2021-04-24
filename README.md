@@ -10,7 +10,7 @@
 </p>
 
 # Install and screenshots
-<a href="https://github.com/EncryptEx/chainex/releases/download/v3.0/chainex.exe">[v3.0] Portable Executable (.exe)</a><br>
+<a href="https://github.com/EncryptEx/chainex/releases/download/v3.1/chainex.exe">[v3.0] Portable Executable (.exe)</a><br>
 <img width="65%" src="./src/img/screenshots/3.0.png" > <br><br>
 <a href="https://github.com/EncryptEx/chainex/releases/download/v2.3LTS/chainex.exe">[v2.3LTS] Portable Executable (.exe)</a><br>
 <img width="65%" src="./src/img/screenshots/2.3 LTS.png"> <br><br>
