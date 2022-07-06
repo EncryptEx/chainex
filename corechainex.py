@@ -51,7 +51,7 @@ def encrypt(en, mode, ti, export):
             exit()
         # var declaration
         crypt = ""
- 
+
         date = getTime(ti)
 
         #genmerate a key  
@@ -238,5 +238,4 @@ def encrypt(en, mode, ti, export):
 
         except:
             return "An error ocurred while decoding it."
-            exit()
         return[final]
