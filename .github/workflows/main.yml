@@ -3,7 +3,7 @@ name: Run tests
 on: push
 
 jobs:
-  run-tests:
+  build:
     runs-on: ubuntu-latest
 
     steps:
