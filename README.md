@@ -21,7 +21,7 @@
 
 # ⁉ FAQ
 ## 🌐 What can I do with ChainEx?
-Tell your friends to download it too and start chatting with them with ChainEx encrypted messages.... But take into account that massges are available only the same that that were encrypted :D
+Tell your friends to download it too and start chatting with them with ChainEx encrypted messages... But take into account that massges are available only the same that that were encrypted :D
 
 ## 🦠Why Chrome or my Antivirus says the .exe file is a virus?
 Normally, viruses are coded with python, and all files coded with python are normally decteced as false virus by lots of internet antivirus and programs. <br>
