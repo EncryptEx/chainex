@@ -30,3 +30,10 @@ Normally, viruses are coded with python, and all files coded with python are nor
 ## 💻My friend is using a diferent version of the program. Is there any compatibility?
 Yes, you can use 2.3 LTS version and 3.0 perfectly. the difference is that 2.3LTS users are always exporting the key into the encoded string. 
 
+
+# ⁉ FAQ for Devs
+
+## 🖥 The chainex.py file crashes when trying it to run?
+You will need Google Chrome/Chromium installed to run the chainex.py since eel uses this browser by default.
+
+Make sure that you have installed the correct [requirements.txt](requirements.txt)
