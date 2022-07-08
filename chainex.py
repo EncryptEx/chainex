@@ -14,4 +14,4 @@ import corechainex
 @eel.expose
 def pyencrypt(en, mode, ti, exp):
     return(corechainex.encrypt(en, mode, ti, exp))
-eel.start('index.html')
+eel.start('index.html', mode='default')
